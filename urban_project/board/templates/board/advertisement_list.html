@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Список объявлений</h1>
+
+<!-- Проверяем, есть ли объявления -->
+{% if advertisements %}
+    <ul>
+        {% for advertisement in advertisements %}
+            <li>
+                <h3>{{ advertisement.title }}</h3>
+                <p>{{ advertisement.description|truncatechars:100 }}</p>
+                <p><strong>Цена:</strong> {{ advertisement.price }} руб.</p>
+
+                <!-- Ссылка на редактирование -->
+                <a href="{% url 'board:edit_advertisement' advertisement.id %}">Редактировать</a>
+
+                <!-- Ссылка на просмотр деталей -->
+                <a href="{% url 'board:advertisement_detail' advertisement.id %}">Подробнее</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>Объявлений пока нет.</p>
+{% endif %}
+
+<!-- Кнопка для добавления нового объявления -->
+<a href="{% url 'board:add_advertisement' %}" class="btn btn-primary">Добавить объявление</a>
+{% endblock %}
